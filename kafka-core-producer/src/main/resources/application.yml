@@ -5,5 +5,7 @@ logging:
 spring:
   main:
     banner-mode: OFF
+  profiles:
+    active: local
   jackson:
     date-format: yyyy-MMM-dd
