@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SimpleNumber {
 
-  private Integer number;
+  private int number;
 
 }

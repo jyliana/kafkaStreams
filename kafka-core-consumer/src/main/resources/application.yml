@@ -1,18 +1,29 @@
 logging:
   pattern:
-    console: "[Kafka Core Consumers %t] %clr(%d{HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:%5p}) %clr(---){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}"
+    console: "[Kafka Core Consumer] %clr(%d{HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:%5p}) %clr(---){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %clr(%t){magenta} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}"
 
 server:
   port: 8081
 
 spring:
+  application:
+    name: kafka-core-consumer
   main:
-    banner-mode: OFF
-  profiles:
-    active: local
+    banner-mode: off
+    log-startup-info: false
   kafka:
+    listener:
+      ack-mode: record
     consumer:
-      group-id: default-spring-consumer
+      group-id: kafka-core-consumer-group
       auto-offset-reset: earliest
+    properties:
+      metrics:
+        num:
+          samples: 4
+#      partition:
+#        assignment:
+#          strategy: org.apache.kafka.clients.consumer.RoundRobinAssignor
   jackson:
-    date-format: yyyy-MMM-dd
+    date-format: yyyy-MM-dd
+

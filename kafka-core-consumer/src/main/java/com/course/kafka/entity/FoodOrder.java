@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class FoodOrder {
 
-  private Integer amount;
-  private String item;
-
+  private int amount;
+  private String foodName;
 }

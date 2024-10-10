@@ -5,10 +5,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class CarLocation {
+
   private String id;
-  private Long timestamp;
-  private Integer distance;
+  private long timestamp;
+  private int distance;
+
 }

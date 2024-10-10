@@ -11,15 +11,16 @@ import org.springframework.stereotype.Service;
 @Service(value = "myFoodOrderErrorHandler")
 public class FoodOrderErrorHandler implements ConsumerAwareListenerErrorHandler {
 
-
   @Override
-  public Object handleError(Message<?> message, ListenerExecutionFailedException e, Consumer<?, ?> consumer) {
-	log.warn("Food order error, sending to ElasticSearch : {}, because : {}", message.getPayload(), e.getCause().getMessage());
+  public Object handleError(Message<?> message, ListenerExecutionFailedException exception, Consumer<?, ?> consumer) {
+	log.warn("FoodOrder error, sending to ElasticSearch (example) : {}, because: {}",
+			message.getPayload(), exception.getMessage());
 
-	if (e.getCause() instanceof RuntimeException) {
-	  throw e;
+	if (exception.getCause() instanceof RuntimeException) {
+	  throw exception;
 	}
 
 	return null;
   }
+
 }

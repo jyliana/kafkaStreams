@@ -20,10 +20,9 @@ public class InvoiceConsumer {
 	var invoice = objectMapper.readValue(message, Invoice.class);
 
 	if (invoice.getAmount() < 1) {
-	  throw new IllegalArgumentException("Invalid amount for " + invoice);
+	  throw new IllegalArgumentException("Invalid amount: " + invoice.getAmount());
 	}
-
-	log.info("Processing invoice : {}", invoice);
+	log.info("Consumed message: {}", message);
   }
 
 }

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class Image {
 
   private String name;
-  private Long size;
+  private long size;
   private String type;
 
 }

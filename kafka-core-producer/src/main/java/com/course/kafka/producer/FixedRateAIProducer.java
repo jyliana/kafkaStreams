@@ -8,17 +8,19 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 //@Service
-public class FixedRateProducer {
+public class FixedRateAIProducer {
+  private static final String TOPIC = "t-fixedrate";
+  private int counter = 0;
+
   @Autowired
   private KafkaTemplate<String, String> kafkaTemplate;
 
-  private int i = 0;
-
   @Scheduled(fixedRate = 1000)
   public void sendMessage() {
-	i++;
-	log.info("i is now: {}", i);
-	kafkaTemplate.send("t-fixedrate", "Fixed rate message " + i);
+	counter++;
+	String message = "Message " + counter;
+	kafkaTemplate.send(TOPIC, message);
+	log.info("Sent message: {} to topic: {}", message, TOPIC);
   }
 
 }

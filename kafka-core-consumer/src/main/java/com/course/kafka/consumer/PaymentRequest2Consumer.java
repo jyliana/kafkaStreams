@@ -10,7 +10,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 
 @Slf4j
 //@Service
-public class PaymentRequestConsumer {
+public class PaymentRequest2Consumer {
 
   @Autowired
   private ObjectMapper objectMapper;
@@ -19,20 +19,12 @@ public class PaymentRequestConsumer {
   @Qualifier("cachePaymentRequest")
   private Cache<String, Boolean> cachePaymentRequest;
 
-  private boolean isExistsInCache(String key) {
-	return cachePaymentRequest.getIfPresent(key) != null;
-  }
 
-  @KafkaListener(topics = "t-payment-request")
+  @KafkaListener(topics = "t-payment-request", containerFactory = "paymentRequestContainerFactory")
   public void consumePaymentRequest(String message) {
 	try {
 	  var paymentRequest = objectMapper.readValue(message, PaymentRequest.class);
 	  var cacheKey = paymentRequest.calculateHash();
-
-	  if (isExistsInCache(cacheKey)) {
-		log.warn("Payment request already exists in cache: {}", paymentRequest);
-		return;
-	  }
 
 	  log.info("Processing payment request: {}", paymentRequest);
 	  cachePaymentRequest.put(cacheKey, true);

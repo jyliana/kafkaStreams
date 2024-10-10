@@ -1,11 +1,15 @@
 logging:
   pattern:
-    console: "[Kafka Core Producer] %clr(%d{HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:%5p}) %clr(---){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}"
+    console: "[Kafka Core Producer] %clr(%d{HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:%5p}) %clr(---){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %clr(%t){magenta} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}"
+
+server:
+  port: 8080
 
 spring:
+  application:
+    name: kafka-core-producer
   main:
-    banner-mode: OFF
-  profiles:
-    active: local
+    banner-mode: off
+    log-startup-info: false
   jackson:
-    date-format: yyyy-MMM-dd
+    date-format: yyyy-MM-dd # HH:mm:ss

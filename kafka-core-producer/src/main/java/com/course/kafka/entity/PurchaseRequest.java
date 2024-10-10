@@ -4,17 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class PurchaseRequest {
 
-  private Integer id;
-  private String prNumber;
-  private Integer amount;
+  private UUID requestId;
+  private String requestNumber;
+  private int amount;
   private String currency;
-  private LocalDateTime date;
 
 }

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class Invoice {
 
   private String invoiceNumber;
-  private Integer amount;
+  private double amount;
   private String currency;
 
 }

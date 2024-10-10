@@ -6,10 +6,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.stereotype.Service;
 
 @Slf4j
-@Service
+//@Service
 public class SimpleNumberConsumer {
 
   @Autowired
@@ -18,11 +17,11 @@ public class SimpleNumberConsumer {
   @KafkaListener(topics = "t-simple-number")
   public void consume(String message) throws JsonProcessingException {
 	var simpleNumber = objectMapper.readValue(message, SimpleNumber.class);
-	if (simpleNumber.getNumber() % 2 != 0) {
-	  throw new IllegalArgumentException("Odd number : " + simpleNumber.getNumber());
+	int number = simpleNumber.getNumber();
+	if (number % 2 != 0) {
+	  throw new IllegalArgumentException("Number is odd: " + number);
 	}
-
-	log.info("Processing simple number : {}", simpleNumber);
+	log.info("Number is even: {}", message);
   }
 
 }

@@ -8,12 +8,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 public class InvoiceService {
-
-  private final AtomicInteger counter = new AtomicInteger();
+  private static final AtomicInteger COUNTER = new AtomicInteger();
 
   public Invoice generateInvoice() {
-	var invoiceNumber = "INV-" + counter.incrementAndGet();
-	var amount = ThreadLocalRandom.current().nextInt(1, 100);
+	var invoiceNumber = "INV-" + COUNTER.incrementAndGet();
+	var amount = Math.round(ThreadLocalRandom.current().nextDouble(100, 1000) * 100.0) / 100.0;
 
 	return new Invoice(invoiceNumber, amount, "USD");
   }

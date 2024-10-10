@@ -4,15 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class PaymentRequest {
 
-  private String paymentNumber;
-  private Integer amount;
+  private int amount;
   private String currency;
+  private String bankAccountNumber;
   private String notes;
-  private String transactionType;
+  private LocalDate paymentDate;
 
 }

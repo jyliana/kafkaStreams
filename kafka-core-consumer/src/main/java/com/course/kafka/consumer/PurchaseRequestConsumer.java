@@ -1,19 +1,15 @@
 package com.course.kafka.consumer;
 
 import com.course.kafka.entity.PurchaseRequest;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.benmanes.caffeine.cache.Cache;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Slf4j
-@Service
+//@Service
 public class PurchaseRequestConsumer {
 
   @Autowired
@@ -21,21 +17,26 @@ public class PurchaseRequestConsumer {
 
   @Autowired
   @Qualifier("cachePurchaseRequest")
-  private Cache<Integer, Boolean> cache;
+  private Cache<String, Boolean> cachePurchaseRequest;
 
-  private boolean isExistsInCache(Integer purchaseRequestId) {
-	return Optional.ofNullable(cache.getIfPresent(purchaseRequestId)).orElse(false);
+  private boolean isExistsInCache(String requestNumber) {
+	return cachePurchaseRequest.getIfPresent(requestNumber) != null;
   }
 
   @KafkaListener(topics = "t-purchase-request")
-  public void consume(String message) throws JsonProcessingException {
-	var purchaseRequest = objectMapper.readValue(message, PurchaseRequest.class);
+  public void consumePurchaseRequest(String message) {
+	try {
+	  var purchaseRequest = objectMapper.readValue(message, PurchaseRequest.class);
 
-	var processed = isExistsInCache(purchaseRequest.getId());
+	  if (isExistsInCache(purchaseRequest.getRequestNumber())) {
+		log.warn("Purchase request already exists in cache: {}", purchaseRequest.getRequestNumber());
+		return;
+	  }
 
-	if (!processed) {
-	  log.info("Processing {}", purchaseRequest);
-	  cache.put(purchaseRequest.getId(), true);
+	  log.info("Processing purchase request: {}", purchaseRequest.getRequestNumber());
+	  cachePurchaseRequest.put(purchaseRequest.getRequestNumber(), true);
+	} catch (Exception e) {
+	  log.error("Error processing purchase request", e);
 	}
   }
 

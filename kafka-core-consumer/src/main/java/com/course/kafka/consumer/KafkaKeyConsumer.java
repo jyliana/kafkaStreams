@@ -5,14 +5,16 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.TimeUnit;
+
 @Slf4j
-@Service
+//@Service
 public class KafkaKeyConsumer {
 
-  @KafkaListener(topics = "t-multi-partitions", concurrency = "3")
-  public void consume(ConsumerRecord<String, String> consumerRecord) throws InterruptedException {
-	log.info("Key : {}, Partition : {}, Message : {}", consumerRecord.key(),
-			consumerRecord.partition(), consumerRecord.value());
-//	TimeUnit.SECONDS.sleep(1);
+  @KafkaListener(topics = "t-multi-partitions", concurrency = "4")
+  public void consume(ConsumerRecord<String, String> record) throws InterruptedException {
+	log.info("Partition: {}, Key: {}, Value: {}", record.partition(), record.key(), record.value());
+	TimeUnit.SECONDS.sleep(1);
   }
+
 }

@@ -24,19 +24,22 @@ public class KafkaCoreProducerApplication implements CommandLineRunner {
 
   @Override
   public void run(String... args) throws Exception {
-//	var image1 = service.generateImage("jpg");
-//	var image2 = service.generateImage("svg");
-//	var image3 = service.generateImage("jpg");
-//	var image4 = service.generateImage("jpg");
-//	var image5 = service.generateImage("jpg");
-//	var image6 = service.generateImage("jpg");
-//
-//	producer.send(image1, 0);
-//	producer.send(image2, 0);
-//	producer.send(image3, 0);
-//	producer.send(image4, 1);
-//	producer.send(image5, 1);
-//	producer.send(image6, 1);
+	var image1 = service.generateImage("JPG");
+	var image2 = service.generateImage("SVG");
+	var image3 = service.generateImage("PNG");
+	var image4 = service.generateImage("GIF");
+	var image5 = service.generateImage("BMP");
+	var image6 = service.generateImage("TIFF");
+
+	producer.sendImage(image1, 0);
+	producer.sendImage(image2, 0);
+	producer.sendImage(image3, 0);
+
+	producer.sendImage(image4, 1);
+	producer.sendImage(image5, 1);
+	producer.sendImage(image6, 1);
+
+
   }
 
 }

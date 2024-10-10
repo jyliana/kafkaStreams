@@ -4,11 +4,11 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 //@Service
-public class HelloKafkaConsumer {
+public class HelloKafkaAIConsumer {
 
   @KafkaListener(topics = "t-hello")
-  public void consume(String message) {
-	System.out.println("Consumed message: " + message);
+  public void listen(String message) {
+	System.out.println("Received message: " + message);
   }
 
 }
